@@ -1,0 +1,87 @@
+import express from 'express';
+const router = express.Router();
+import wrapAsync from "../utils/wrapAsync.js";
+import expressError from "../utils/expressError.js";                            
+import { listingSchema } from "../schema.js";
+import Listing from "../models/listing.js";
+
+const validateListing = (req, res, next) => {
+  const { error } = listingSchema.validate(req.body);
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(",");
+    throw new expressError(400, errMsg);
+  } else {
+    next();
+  }
+};
+
+
+router.get(
+  "/",
+  wrapAsync(async (req, res) => {
+    const allListings = await Listing.find({});
+    res.render("listings/index.ejs", { allListings });
+  })
+);
+
+router.get(
+  "/new",
+  wrapAsync(async (req, res) => {
+    const listing = new Listing();
+    res.render("listings/new.ejs", { listing });
+  })
+);
+
+router.post(
+  "/",
+  validateListing,
+  wrapAsync(async (req, res) => {
+    const listing = new Listing(req.body.listing);
+    await listing.save();
+    res.redirect("/listings");
+  })
+);
+
+router.get(
+  "/:id",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    const listing = await Listing.findById(id).populate("review");
+    res.render("listings/show.ejs", { listing });
+  })
+);
+
+router.get(
+  "/:id/edit",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/edit.ejs", { listing });
+  })
+);
+
+router.patch(
+  "/:id",
+  validateListing,
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    if (req.body.listing.image && typeof req.body.listing.image === "string") {
+      req.body.listing.image = { url: req.body.listing.image };
+    }
+    const listing = await Listing.findByIdAndUpdate(id, {
+      ...req.body.listing,
+    });
+    res.redirect(`/listings/${id}`);
+  })
+);
+
+router.delete(
+  "/:id",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    await Listing.findByIdAndDelete(id);
+    res.redirect("/listings");
+  })
+);
+
+export default router;

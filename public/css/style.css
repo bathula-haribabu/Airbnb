@@ -1,0 +1,156 @@
+
+
+body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+   
+  }
+  .container {
+    flex: 1;
+    
+  }
+
+ 
+
+.navbar{
+    height: 5rem;
+    background-color: white;
+
+}
+.fa-compass{
+    color: #fe424d;
+    font-size:2rem;
+}
+.nav-link{
+    color: #222222 !important;
+}
+.f-links a{
+    text-decoration: none;
+    color: #222222 !important;
+    font-size: 1.05rem;
+}
+.f-links a:hover{
+    text-decoration: underline;
+}
+.f-links{
+    /* margin-top: 1rem; */
+    margin-right: .60rem;
+
+}
+.foot{
+    height: 8rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+.heading{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #222222;
+    margin-top: 0.80rem;
+    
+
+}
+ 
+.f-social{
+    font-size: 1.75rem;
+    margin-left: 1rem;
+
+
+}
+.f-social , .f-links{
+    width:100%;
+}
+h3{
+    text-align: center;
+}
+
+
+/* Cards */
+
+.card{
+    border:none !important;
+    margin-bottom:2rem;
+}
+.card-top{
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 1rem !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p{
+    font-weight: 400 !important;
+}
+
+.link{
+    text-decoration: none;
+    color: black;
+}
+
+.card-img-overlay{
+    opacity:0;
+}
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color: white;
+}
+.btns{
+    display: flex;
+}
+
+
+/* Custom Card Styling */
+.custom-card {
+    max-width: 900px; /* Set a maximum width for the card */
+    margin: 0 auto; /* Center the card horizontally */
+    border: none !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 20rem; /* Adjusted height for better visibility */
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+    padding: 1.5rem;
+    text-align: left;
+    margin-left: 1rem;
+}
+
+.card-title {
+    font-size: 2rem; /* Increased font size for the title */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.card-text {
+    font-size: 1.2rem; /* Slightly larger text for better readability */
+    color: #555;
+}
+
+.btns {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 1rem; /* Add margin above the buttons */
+    padding-top: 1rem;  /* Optional: Add a subtle border to separate buttons */
+}
+.button {
+    margin-bottom: 1rem;
+}
+
