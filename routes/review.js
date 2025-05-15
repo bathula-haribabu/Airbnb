@@ -23,6 +23,7 @@ router.post("/",wrapAsync( async (req, res) => {
   listing.review.push(newReview);
   await newReview.save();
   await listing.save();
+  req.flash("success", "Review Created Successfully");
   res.redirect(`/listings/${listing._id}`);
 }));
 
@@ -33,6 +34,7 @@ router.delete(
     let { id, reviewId } = req.params;
     Listing.findByIdAndUpdate(id, { $pull: { review: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success", "Review Deleted Successfully");
     res.redirect(`/listings/${id}`);
   })
 );
