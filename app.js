@@ -9,6 +9,11 @@ import reviews from "./routes/review.js";
 import "dotenv";
 import session from "express-session";
 import flash from "connect-flash";
+import passport from "passport";
+import LocalStrategy from "passport-local";
+import User from "./models/user.js";
+
+
 
 const app = express();
 
@@ -33,6 +38,14 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 app.use(flash());
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");

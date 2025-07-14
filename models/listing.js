@@ -1,47 +1,52 @@
-import mongoose, { set } from "mongoose";
- const Schema = mongoose.Schema;
- import Review from "./review"
+import mongoose from "mongoose";
+import Review from "./review";
+
+const Schema = mongoose.Schema;
 
 const listingSchema = new Schema({
-    title:{
-        type:String,
-        required:true,
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
+  image: {
+    filename: String,
+    url: {
+      type: String,
+      default:
+        "https://news.airbnb.com/wp-content/uploads/sites/4/2019/06/PJM020719Q202_Luxe_WanakaNZ_LivingRoom_0264-LightOn_R1.jpg?fit=2500%2C1666",
+      set: (v) =>
+        v === ""
+          ? "https://news.airbnb.com/wp-content/uploads/sites/4/2019/06/PJM020719Q202_Luxe_WanakaNZ_LivingRoom_0264-LightOn_R1.jpg?fit=2500%2C1666"
+          : v,
     },
-    description:{
-        type:String,
+  },
+  price: {
+    type: Number,
+  },
+  location: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  review: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
     },
-    image: {
-        filename: String,
-        url: {
-                type: String,
-                default: "https://news.airbnb.com/wp-content/uploads/sites/4/2019/06/PJM020719Q202_Luxe_WanakaNZ_LivingRoom_0264-LightOn_R1.jpg?fit=2500%2C1666",
-                set:(v)=>v === "" ? "https://news.airbnb.com/wp-content/uploads/sites/4/2019/06/PJM020719Q202_Luxe_WanakaNZ_LivingRoom_0264-LightOn_R1.jpg?fit=2500%2C1666" : v,
-            }
-    },
-    price:{
-        type:Number,
-    },
-    location:{
-        type:String,
-    },
-    country:{
-        type:String,
-    },
-    review:[
-        {
-            type: Schema.Types.ObjectId,
-            ref:"Review",
-        },
-    ],
-})
+  ],
+});
 listingSchema.post("findOneAndDelete", async (doc) => {
-    if (doc) {
-        await Review.deleteMany({
-            _id: {
-                $in: doc.review,
-            },
-        });
-    }
+  if (doc) {
+    await Review.deleteMany({
+      _id: {
+        $in: doc.review,
+      },
+    });
+  }
 });
 
 const listing = mongoose.model("listing", listingSchema);
