@@ -4,8 +4,6 @@ import methodOverride from "method-override";
 import path from "path";
 import ejsMate from "ejs-mate";
 import expressError from "./utils/expressError.js";
-import listings from "./routes/listing.js";
-import reviews from "./routes/review.js";
 import "dotenv";
 import session from "express-session";
 import flash from "connect-flash";
@@ -13,7 +11,9 @@ import passport from "passport";
 import LocalStrategy from "passport-local";
 import User from "./models/user.js";
 
-
+import listingRouter from "./routes/listing.js";
+import reviewRouter from "./routes/review.js";
+import userRouter from "./routes/user.js";
 
 const app = express();
 
@@ -39,7 +39,6 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -53,8 +52,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 const URL = process.env.DB_URL;
 async function main() {
