@@ -5,6 +5,8 @@ import expressError from "../utils/expressError.js";
 import { listingSchema } from "../schema.js";
 import Listing from "../models/listing.js";
 
+import {isLoggedIn} from "../middleware.js";
+
 const validateListing = (req, res, next) => {
   const { error } = listingSchema.validate(req.body);
   if (error) {
@@ -25,6 +27,7 @@ router.get(
 
 router.get(
   "/new",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const listing = new Listing();
     res.render("listings/new.ejs", { listing });
@@ -58,6 +61,7 @@ router.get(
 
 router.get(
   "/:id/edit",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
@@ -71,6 +75,7 @@ router.get(
 
 router.patch(
   "/:id",
+  isLoggedIn,
   validateListing,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
@@ -87,6 +92,7 @@ router.patch(
 
 router.delete(
   "/:id",
+  isLoggedIn,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndDelete(id);
