@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Review from "./review";
+import Review from "./review.js";
 
 const Schema = mongoose.Schema;
 
@@ -38,6 +38,10 @@ const listingSchema = new Schema({
       ref: "Review",
     },
   ],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 listingSchema.post("findOneAndDelete", async (doc) => {
   if (doc) {

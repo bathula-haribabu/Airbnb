@@ -41,9 +41,12 @@
         <img
           src="<%= listing.image.url %>"
           class="card-img-top"
-          alt="<%= listing.title %>" />
+          alt="<%= listing.title %>"
+        />
         <div class="card-body">
           <p class="card-text">
+            owned By: <i style="color: blue"><%= listing.owner.username %></i>
+            <br />
             <b>Description:</b> <%= listing.description %> <br />
             <b>Price:</b> &#8377;<%= listing.price ?
             listing.price.toLocaleString("en-IN") : "N/A" %> /night <br />
@@ -51,6 +54,7 @@
             <b>Country:</b> <%= listing.country || "N/A" %>
           </p>
         </div>
+
         <div class="card-body btns button">
           <a
             href="/listings/<%= listing._id %>/edit"
@@ -60,7 +64,8 @@
           <form
             action="/listings/<%= listing._id %>?_method=DELETE"
             method="post"
-            style="display: inline">
+            style="display: inline"
+          >
             <button class="btn btn-danger btn-lg">Delete</button>
           </form>
         </div>
@@ -71,7 +76,8 @@
           action="/listings/<%= listing._id%>/reviews"
           method="post"
           novalidate
-          class="needs-validation">
+          class="needs-validation"
+        >
           <div class="ml-3 mr-3">
             <label for="rating" class="form-label">Rating</label>
             <input
@@ -80,7 +86,8 @@
               max="5"
               id="rating"
               name="review[rating]"
-              class="ml-3 mr-3 form-range" />
+              class="ml-3 mr-3 form-range"
+            />
           </div>
           <div>
             <label for="comment" class="form-label">Comments</label>
@@ -90,7 +97,8 @@
               cols="20"
               rows="5"
               class="form-control"
-              required></textarea>
+              required
+            ></textarea>
             <div class="invalid-feedback">
               Please add the comments for the review
             </div>
@@ -100,22 +108,25 @@
           </div>
         </form>
       </div>
-<hr>
+      <hr />
       <h4><b>All Reviews</b></h4>
 
       <div class="row">
         <% for( let reviews of listing.review) { %>
         <div class="card col-6 mr-3">
-          <div class="card-body " >
+          <div class="card-body">
             <p class="card-title">Card title</p>
             <p class="card-text"><%=reviews.comment %></p>
             <p class="card-text"><%=reviews.rating %>stars</p>
-           <form action="/listings/<%= listing._id%>/reviews/<%= reviews._id%>?_method=DELETE" method="post">
-            <button class="btn btn-dark">Delete</button>
-           </form>
+            <form
+              action="/listings/<%= listing._id%>/reviews/<%= reviews._id%>?_method=DELETE"
+              method="post"
+            >
+              <button class="btn btn-dark">Delete</button>
+            </form>
           </div>
         </div>
-         <%}%>
+        <%}%>
       </div>
     </div>
   </div>

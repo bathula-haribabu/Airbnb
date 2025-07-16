@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
 import path from "path";
+import { fileURLToPath } from "url";
 import ejsMate from "ejs-mate";
 import expressError from "./utils/expressError.js";
 import "dotenv";
@@ -16,6 +17,9 @@ import reviewRouter from "./routes/review.js";
 import userRouter from "./routes/user.js";
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -58,9 +62,10 @@ app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 const URL = process.env.DB_URL;
+
 async function main() {
   try {
-    await mongoose.connect(URL);
+    await mongoose.connect("mongodb://localhost:27017/airbnb");
     console.log("Connected to MongoDB");
   } catch (err) {
     console.error("Error connecting to MongoDB", err);

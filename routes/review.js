@@ -1,20 +1,11 @@
 import express from 'express';
 const router = express.Router({ mergeParams: true });
 import Review from "../models/review.js";
-import expressError from "../utils/expressError.js";
 import wrapAsync from "../utils/wrapAsync.js";
-import { reviewSchema } from "../schema.js";
+import {validateReview} from "../middleware.js";
 import Listing from "../models/listing.js";
 
-const validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body);
-  if (error) {
-    let errMsg = error.details.map((el) => el.message).join(",");
-    throw new expressError(400, errMsg);
-  } else {
-    next();
-  }
-};
+
 
 
 router.post("/",wrapAsync( async (req, res) => {
