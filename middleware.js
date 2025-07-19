@@ -2,12 +2,13 @@ import Listing from "./models/listing.js";
 import expressError from "./utils/expressError.js";
 import { listingSchema } from "./schema.js";
 import { reviewSchema } from "./schema.js";
+import Review from "./models/review.js";
 
 const isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.redirectUrl = req.originalUrl;
     req.flash("error", "You must logged in for create listing");
-    res.redirect("/login");
+    return res.redirect("/login");
   }
   next();
 };
@@ -39,7 +40,6 @@ const validateListing = (req, res, next) => {
   }
 };
 
-
 const validateReview = (req, res, next) => {
   const { error } = reviewSchema.validate(req.body);
   if (error) {
@@ -50,4 +50,22 @@ const validateReview = (req, res, next) => {
   }
 };
 
-export { isLoggedIn, savedRedirectUrl, isOwner, validateListing,validateReview };
+
+const isAuthor = async (req, res, next) => {
+  const { id,reviewId } = req.params;
+  let review = await Review.findById(reviewId);
+  if (!review.author.equals(res.locals.currUser._id)) {
+    req.flash("error", "You Don't have  Permission to edit the review!");
+    return res.redirect(`/listings/${id}`);
+  }
+  return next();
+};
+
+export {
+  isLoggedIn,
+  savedRedirectUrl,
+  isOwner,
+  validateListing,
+  validateReview,
+  isAuthor,
+};

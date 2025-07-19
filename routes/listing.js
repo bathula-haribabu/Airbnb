@@ -4,9 +4,7 @@ import wrapAsync from "../utils/wrapAsync.js";
 
 import Listing from "../models/listing.js";
 
-import { isLoggedIn, isOwner,validateListing } from "../middleware.js";
-
-
+import { isLoggedIn, isOwner, validateListing } from "../middleware.js";
 
 router.get(
   "/",
@@ -43,7 +41,7 @@ router.get(
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id)
-      .populate("review")
+      .populate({ path: "review", populate: { path: "author" } })
       .populate("owner");
     if (!listing) {
       req.flash("error", "Listing Does Not Exist!");

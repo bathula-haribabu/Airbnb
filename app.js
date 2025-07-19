@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
@@ -65,7 +66,7 @@ const URL = process.env.DB_URL;
 
 async function main() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/airbnb");
+    mongoose.connect(URL);
     console.log("Connected to MongoDB");
   } catch (err) {
     console.error("Error connecting to MongoDB", err);
