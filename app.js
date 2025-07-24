@@ -6,13 +6,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import ejsMate from "ejs-mate";
 import expressError from "./utils/expressError.js";
-import "dotenv";
 import session from "express-session";
 import flash from "connect-flash";
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import User from "./models/user.js";
-
 import listingRouter from "./routes/listing.js";
 import reviewRouter from "./routes/review.js";
 import userRouter from "./routes/user.js";

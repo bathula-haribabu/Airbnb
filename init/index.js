@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import "dotenv";
+import "dotenv/config";
 import { getListings } from "./data.js";
 import listing from "../models/listing.js";
 
