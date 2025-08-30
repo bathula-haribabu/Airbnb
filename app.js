@@ -58,7 +58,7 @@ app.use((req, res, next) => {
 
 // Place home route BEFORE other routers (optional but clear)
 app.get("/", (req, res) => {
-  res.render("home");
+  res.redirect("/listings"); // 302 temporary redirect
 });
 
 app.use("/listings", listingRouter);
