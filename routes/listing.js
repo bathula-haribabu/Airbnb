@@ -43,7 +43,7 @@ router.get(
     const listing = await Listing.findById(id)
       .populate("owner")
       .populate({
-        path: "reviews",
+        path: "review",
         populate: { path: "author" },
       });
     if (!listing) {
