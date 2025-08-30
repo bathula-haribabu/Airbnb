@@ -56,9 +56,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// Place home route BEFORE other routers (optional but clear)
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+
+// 404 handler AFTER all real routes
+app.all("*", (req, res, next) => {
+  next(new expressError(404, "Page Not Found"));
+});
+
+// Error handler LAST
+app.use((err, req, res, next) => {
+  let { statusCode = 500, message = "Something Went Wrong!" } = err;
+  res.status(statusCode).render("error.ejs", { message });
+});
 
 const URL = process.env.DB_URL;
 
@@ -72,19 +88,6 @@ async function main() {
 }
 
 main();
-
-app.all("*", (req, res, next) => {
-  next(new expressError(404, "Page Not Found"));
-});
-
-app.use((err, req, res, next) => {
-  let { statusCode = 500, message = "Something Went Wrong!" } = err;
-  res.status(statusCode).render("error.ejs", { message });
-});
-
-app.get("/", (req, res) => {
-  res.render("home"); 
-});
 
 const port = process.env.PORT || 3000;
 
