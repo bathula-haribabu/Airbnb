@@ -83,7 +83,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.render("home"); 
 });
 
 const port = process.env.PORT || 3000;
