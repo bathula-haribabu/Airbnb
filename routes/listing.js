@@ -41,14 +41,16 @@ router.get(
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id)
-      .populate({ path: "review", populate: { path: "author" } })
-      .populate("owner");
+      .populate("owner")
+      .populate({
+        path: "reviews",
+        populate: { path: "author" },
+      });
     if (!listing) {
-      req.flash("error", "Listing Does Not Exist!");
-      res.redirect("/listings");
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
     }
-
-    res.render("listings/show.ejs", { listing });
+    res.render("listings/show", { listing });
   })
 );
 
