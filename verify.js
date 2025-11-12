@@ -13,13 +13,12 @@ const base = "node_modules";
 must(path.join(base, "mongoose", "package.json"));
 must(path.join(base, "mongodb", "lib", "index.js"));
 
-// Try to resolve internal 'union' module directly (will throw if missing/corrupt)
+
 try {
   const unionPath = path.join(base, "mongoose", "lib", "schema", "union.js");
   if (fs.existsSync(unionPath)) {
     console.log("Found union.js");
   } else {
-    // Fallback: check schema index still loads (different version may inline union)
     await import(
       pathToFileURL(path.join(base, "mongoose", "lib", "schema", "index.js"))
     );

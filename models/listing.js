@@ -42,7 +42,7 @@ const listingSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-});
+})
 listingSchema.post("findOneAndDelete", async (doc) => {
   if (doc) {
     await Review.deleteMany({

@@ -5,4 +5,4 @@ class expressError extends Error {
     this.message = message;
   }
 }
-export default expressError;
+export default expressError

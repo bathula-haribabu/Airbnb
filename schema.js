@@ -19,4 +19,4 @@ const reviewSchema = Joi.object({
   })
 })
 
-export {reviewSchema};
+export {reviewSchema}

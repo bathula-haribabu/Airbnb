@@ -97,6 +97,6 @@ router.delete(
     req.flash("success", "Listing Deleted Successfully");
     res.redirect("/listings");
   })
-);
+)
 
 export default router;

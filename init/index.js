@@ -22,11 +22,11 @@ const init = async () => {
   await listing.insertMany(listingsWithOwner);
   console.log("Data inserted");
   console.log("Data initialized");
-};
+}
 
 const initDatabase = async () => {
   await main();
   await init();
   mongoose.connection.close();
-};
+}
 initDatabase();

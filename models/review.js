@@ -16,7 +16,7 @@ const reviewSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-});
+})
 
 const Review = mongoose.model("Review", reviewSchema);
 export default Review;

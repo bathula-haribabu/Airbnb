@@ -68,4 +68,4 @@ export {
   validateListing,
   validateReview,
   isAuthor,
-};
+}

@@ -32,5 +32,5 @@ router.delete(
     req.flash("success", "Review Deleted Successfully");
     res.redirect(`/listings/${id}`);
   })
-);
+)
 export default router;

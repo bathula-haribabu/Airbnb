@@ -57,6 +57,6 @@ router.get("/logout", async (req, res, next) => {
     req.flash("success", "Log Out successfully!");
     res.redirect("/listings");
   });
-});
+})
 
 export default router;

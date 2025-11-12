@@ -213,7 +213,7 @@ const sampleListings = [
     },
     price: 3000,
     location: "Phuket",
-    country: "Thailand",
+    country: "Thailand country",
   },
   {
     title: "Historic Castle in Scotland",
